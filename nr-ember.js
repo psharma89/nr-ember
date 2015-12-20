@@ -85,17 +85,17 @@
 
 
       Ember.Router.reopen({
-        stop: function() {
+        nrNavEnd: function() {
           newrelicTiming.mark('navEnd');
           return;
         }.on('didTransition'),
-        start: function() {
+        nrNavStart: function() {
           newrelicTiming.mark('navStart');
           return;
         }.on('willTransition')
       });
       Ember.View.reopen({
-        rendered: function() {
+        nrRendered: function() {
           loaded();
           return;
         }.on('didInsertElement')
