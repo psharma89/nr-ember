@@ -79,7 +79,7 @@
   Ember.onLoad('Ember.Application', function(Application) {
     var loaded = debounce(function(){
       newrelicTiming.mark('pageRendered');
-      newrelicTiming.sendNRBeacon(window.location.pathname);
+      newrelicTiming.sendNRBeacon(window.location.href.replace(window.location.origin, ''));
     }, newrelicTiming.debounceTime);
 
       newrelicTiming.mark('navStart');
