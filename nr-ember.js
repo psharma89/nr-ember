@@ -59,12 +59,6 @@
       this.marks['navStart'] = null;
     };
 
-    this.checkBeaconRequirements = function() {
-      if (!this.NREUM || !this.NREUM.addPageAction || typeof this.NREUM.addPageAction !== 'function') {
-        return false;
-      }
-      return this.marks.navStart && this.marks.navEnd && this.marks.pageRendered;
-    };
   };
 
   if (typeof Ember === 'undefined') {
