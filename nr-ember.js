@@ -2,7 +2,11 @@
 
 (function(Ember, NREUM) {
   
-  
+  if (typeof NREUM === 'undefined' && typeof NREUM.interaction !== 'function' ) {
+    console.log('api missing');
+    return;
+  }
+  var myInteraction;
 
 
   function debounce(fn, delay) {
@@ -47,10 +51,11 @@
       fragmentName || (fragmentName = window.location.hash.substring(1));
 
       fragmentName = fragmentName.replace(/\/[0-9]+\//g, '/*/').replace(/\/[0-9]+$/, '/*');
-
+      myInteraction.setName(fragmentName);
       var navEnd = this.measure('navEnd', 'navStart');
       var renderTime = this.measure('pageRendered', 'navStart');
-      this.NREUM.addPageAction('Route', {'url': fragmentName, 'appTime': navEnd, 'renderTime': renderTime - this.debounceTime});
+      myInteraction.setAttribute('appTime': navEnd);
+      myInteraction.setAttribute('renderTime': renderTime - this.debounceTime);
       this.marks['navStart'] = null;
     };
 
@@ -91,6 +96,7 @@
           return;
         }.on('didTransition'),
         nrNavStart: function() {
+          myInteraction = newrelic.interaction();
           newrelicTiming.mark('navStart');
           return;
         }.on('willTransition')
